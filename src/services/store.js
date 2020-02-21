@@ -1,5 +1,5 @@
 const crypto = require('crypto')
-const knex = require('knex')(require('./knexfile'))
+const knex = require('knex')(require('../loaders/knexfile'))
 
 module.exports = {
     saltHashPassword,
@@ -11,19 +11,22 @@ module.exports = {
         salt,
         encrypted_password: hash,
         username
-      })
+      })//.debug()   // log a Knex query
     },
 
     authenticate ({ username, password }) {
       console.log(`Authenticating user ${username}`)
       return knex('user').where({ username })
         .then(([user]) => {
+          console.log("In store.authenticate() - user is ", user) //Never prints.
           if (!user) return { success: false }
           const { hash } = saltHashPassword({
             password,
             salt: user.salt
           })
-          return { success: hash === user.encrypted_password }
+          return { success: hash === user.encrypted_password,
+            "uinfo" : hash
+          }
         })
     }
 
