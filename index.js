@@ -27,6 +27,15 @@ app.post('/book', (req, res) => {
 });
 
 
+
+app.get('/', (req, res) => {
+  // res.sendStatus(200)
+  res.json({info: "Testing!"})
+})
+
+
+
+
 app.post('/createUser', (req, res) => {
   store
     .createUser({
@@ -49,7 +58,7 @@ app.post('/login', (req, res) => {
       console.log("In Backend Index post login response. uInfo is: ", resp.uinfo)
       if (resp.success) {       // need to change to add === true ? 
         // res.sendStatus(200)
-        const userinfo = resp.uinfo;
+        const userinfo = resp.uinfo;   
         return res.status(200).send({
           success: 'true',
           message: 'retrieved successfully',

@@ -18,7 +18,7 @@ module.exports = {
       console.log(`Authenticating user ${username}`)
       return knex('user').where({ username })
         .then(([user]) => {
-          console.log("In store.authenticate() - user is ", user) //Never prints.
+          console.log("In store.authenticate() - user is ", user) 
           if (!user) return { success: false }
           const { hash } = saltHashPassword({
             password,
