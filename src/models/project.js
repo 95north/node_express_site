@@ -1,5 +1,6 @@
 // for mongoDB, fm https://www.robinwieruch.de/mongodb-express-setup-tutorial
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 // Alternate Syntax !!! 
 //var Item = new ItemSchema(
@@ -38,4 +39,5 @@ const projectSchema = new mongoose.Schema(
 
 const Project = mongoose.model('Project', projectSchema);
 
-export default Project;
+exports.Project = Project;
+// export default Project;

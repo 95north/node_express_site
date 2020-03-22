@@ -6,7 +6,10 @@ const store = require('./src/services/store'); //****** */
 // var mongoose = require(‘mongoose’);   // "
 // var Schema = mongoose.Schema;         // "   
 // var multer = require('multer');       // "
-const URL_MONGODB = "http://localhost:27017";           // *** Location of db??!
+const URL_MONGODB = "mongodb://localhost:27017/portfoliodb";  // "mongodb://localhost:27017/data/db";  //"mongodb://localhost:27017";           // *** Location of db??!
+const PORT_MONGODB = "27017";
+
+// mongodb://<HOSTNAME>:<PORT>/<DBNAME>
 
 
 // for mongoDB, fm https://www.robinwieruch.de/mongodb-express-setup-tutorial
@@ -126,18 +129,27 @@ app.post('/login', (req, res) => {
 // If you want to re-initialize your database 
 // on every Express server start, add a 
 // condition to your function:
-    const eraseDatabaseOnSync = true;
-    connectDb().then(async () => {
+    const eraseDatabaseOnSync = false;  // was true, changed bc got error "Cannot read property 'deleteMany' of undefined"
+    connectDb.connectDb().then(async () => {
       if (eraseDatabaseOnSync) {
         await Promise.all([
-          models.User.deleteMany({}),
-          models.Message.deleteMany({}),
+          models.models.Project.deleteMany({}),
+          // models.User.deleteMany({}),
+          // models.Message.deleteMany({}),
         ])
         createProjectSeedData();
       }
-      app.listen(process.env.PORT, () =>
-        console.log(`Example app listening on port ${process.env.PORT}!`),
+      await createProjectSeedData();
+
+
+      app.listen(PORT_MONGODB , () =>
+        console.log(`Now listening on port  ------------ ${PORT_MONGODB}!`),
+        console.log(`Now listening on url ------------ ${URL_MONGODB}!`),
+
       );
+      // app.listen(process.env.PORT, () =>
+      //   console.log(`Example app listening on port ${process.env.PORT}!`),
+      // );
     });
 
 
@@ -146,7 +158,7 @@ app.post('/login', (req, res) => {
       //   username: 'rwieruch',
       // });
       // await user1.save();
-      const project1 = new models.Project({
+      const project1 = new models.models.Project({
         name: "DIY Or Don't",
         description: "Research, read, & leave reviews of home improvement projects, add projects to your list, manage your toolbox and shopping list, have your shopping list texted to you.",
         link: "http://diy-or-dont-frontend.herokuapp.com/login",
@@ -154,7 +166,8 @@ app.post('/login', (req, res) => {
         year: 2019
       });
       await project1.save();
-      const project2 = new models.Project({
+      console.log("Project 1 allegedly saved!!!!!")
+      const project2 = new models.models.Project({
         name: "Bodega Review App",
         description: "Locate the best bodega by map as rated for its coffee, cat, etc.",
         languages: ["React", "JavaScript", "HTML", "CSS", "Ruby", "Ruby on Rails"], 

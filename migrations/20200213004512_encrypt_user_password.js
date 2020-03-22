@@ -1,5 +1,5 @@
 
-const { saltHashPassword } = require('../store')
+const { saltHashPassword } = require('../src/services/store')
 
 // Await - support started w Node 7
 exports.up = async function up (knex) {
