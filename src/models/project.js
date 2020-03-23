@@ -11,12 +11,6 @@ const mongoose = require('mongoose');
 // );
 
 const projectSchema = new mongoose.Schema(
-    // {
-
-    // username: {
-    //     type: String,
-    //     unique: true,
-    // },
     { 
         name: String,
         description: String,
@@ -32,12 +26,10 @@ const projectSchema = new mongoose.Schema(
                 contentType: String 
         },
     }
-
-    // }
 );
 
 
 const Project = mongoose.model('Project', projectSchema);
 
 exports.Project = Project;
-// export default Project;
+

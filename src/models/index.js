@@ -25,8 +25,9 @@ const URL_MONGODB = "mongodb://localhost:27017/portfoliodb";
 // If the database doesn't exist yet, 
 // MongoDB will create one for you.
 
-
-const connectDb = () => {    // Does it still work if I disconnect this? 
+//  ******** Should I move the initial DB connection to loaders or something??  
+const connectDb = () => {    // Does it still work if I disconnect this? NO - bc use this in main index!!! 
+    // add error logging! 
     // When createProjectSeedData() was never reached, this was never being invoked.....
     console.log("!!!!!!!!!!!!!************ connectDb from Models was called!!!!!!!!!!!!!!!!!!!!")
     console.log("!!!!!!!!!!!!!************ connectDb from Models was called!!!!!!!!!!!!!!!!!!!!")
@@ -36,11 +37,34 @@ const connectDb = () => {    // Does it still work if I disconnect this?
 };
 
 
-// const models = { User, Message };
+
+
+
+// const models = { User, Message };  // export as list, doesn't like
 // const models = { Project };   as list.  commented out to resolve error  TypeError: models.models.Project is not a constructor main index.js ln161
 const models = Project;  // YUP! This fixed it 
 
+
 // export { connectDb }; // export list. 
 // export default models;
-exports.connectDb = connectDb;
+exports.connectDb = connectDb;  // the MongoDB DataBase  **Connection** itself,  there is a Connection object.. 
 exports.models = models;
+
+
+
+
+// SetUp per :   https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/mongoose
+// //Import the mongoose module
+// var mongoose = require('mongoose');
+
+// //Set up default mongoose connection
+// var mongoDB = 'mongodb://127.0.0.1/my_database';
+// mongoose.connect(mongoDB, { useNewUrlParser: true });
+
+// // get the default Connection object with mongoose.connection.
+// var db = mongoose.connection;
+
+// //Bind connection to error event (to get notification of connection errors)
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+
