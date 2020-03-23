@@ -36,7 +36,8 @@ const connectDb = () => {    // Does it still work if I disconnect this? NO - bc
     // return mongoose.connect(process.env.DATABASE_URL);
 };
 
-
+// connectDb.on('error', (error) => console.error(error))    // connectDb.on is not a function  :( 
+// db.once('open', () => console.log('connected to database'))
 
 
 

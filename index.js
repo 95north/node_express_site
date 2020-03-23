@@ -1,6 +1,6 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const store = require('./src/services/store'); //****** KNEX TO CONNECT TO MySQL DATABASE !!!!  */
+const bodyParser = require('body-parser');      // body-parser package so we can receive JSON data in our payloads
+const store = require('./src/services/store');  //****** KNEX TO CONNECT TO MySQL DATABASE !!!!  */
 
 
 const URL_MONGODB = "mongodb://localhost:27017/portfoliodb";  // "mongodb://localhost:27017/data/db";  //"mongodb://localhost:27017";           // *** Location of db??!
@@ -10,14 +10,17 @@ const PORT_MONGODB = "27017";
 const models = require('./src/models');       // all Models.  ATM is just Projects
 const connectDb = require('./src/models');    // the MongoDB database Connection itself 
 const allProjects = require('./src/api/routes/project.js');   // SHOULD MOVE THIS LATER !!!! to controller or svc. 
+const aProject = require('./src/api/routes/project.js');   // SHOULD MOVE THIS LATER !!!! to controller or svc. 
 
 
 // var cors = require('cors')  // Don't need, specify CORS below instead. 
 const app = express();
 
 
+// .use is middleware that allows you to run code when the server gets a request but before it gets passed to your routes.
 app.use(express.static('public'))
 app.use(bodyParser.json())
+// app.use(BodyParser.urlencoded({ extended: true }));    // What is this for? is in addition to app.use(bodyParser.json())
 // app.use(cors())    Don't need anymore - 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -100,7 +103,7 @@ app.listen(7555, () => {
 
 
  
-
+// ----  mongoDB    Project Routes ---- 
 app.get('/allprojects', async function (req, res) {
       function getProjectsFromMongoDB(){
           return allProjects.allProjects();
@@ -110,11 +113,24 @@ app.get('/allprojects', async function (req, res) {
 
       return res.status(200).send({
           success: 'true',
-          projectsArray: theData
+          projectsArray: theData,
+          body: "cuerpo"
       })
 })
 
 
+app.get('/p', async function (req, res) {
+  // console.log("in aProject, res is: ", res)   //  a ServerResponse obj!  Interesting to look at! 
+  function getAProjectFromMongoDB(){
+      return aProject.aProject();
+  }
+  let theData = await getAProjectFromMongoDB();
+  // return  theData.json();        // Error : TypeError: theData.json is not a function
+  // return res.json(theData);      // This works.  It likes this. 
+  return res.status(200).send({
+      theData
+  })
+})
 
 
 

@@ -43,6 +43,27 @@ async function allProjects(){
 
 
 
+async function aProject (){
+    function retrieveAllProjects (){
+        let data = Project.findOne() //  function(err, result){  // All callbacks in Mongoose: callback(error, result)
+        //     if (err) return handleError(err);   
+        //     projects = result;
+        //     console.log("Type of result is -------", typeof result)
+        //     console.log("________", projects[0]["languages"])
+        //     return projects;
+
+        // });
+        // return data; 
+        return data
+
+    }
+    let mydata = await retrieveAllProjects();
+    return mydata;
+}
+
+
+
+
 
 
 
@@ -58,5 +79,5 @@ async function allProjects(){
 // export default router;
 // exports.allProjects = allProjects();  // This worked when it was a function.. 
 exports.allProjects = allProjects;
-
+exports.aProject = aProject;
 // module.exports = router;   // Looks like this blocks allProjects from being exported!!!! 
