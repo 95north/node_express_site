@@ -25,6 +25,11 @@ const projectSchema = new mongoose.Schema(
                 data: Buffer, 
                 contentType: String 
         },
+        //images: [{type: "binData"}]    // wrong, crashes 
+        // images: [{type: String}]    //EED TO FLESH THIS OUT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        images: [{type: Buffer}]    // Works better I think? 
+
+        
     }
 );
 
