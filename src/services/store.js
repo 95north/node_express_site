@@ -1,5 +1,19 @@
 const crypto = require('crypto')
-const knex = require('knex')(require('../loaders/knexfile'))
+// Need to rename this.  It is used in loaders/knexfile.
+
+
+// const knex = require('knex')(require('../loaders/knexfile'))
+// Error: knex: Required configuration option 'client' is missing.
+const knex = require('knex')({      // LOAD THIS IN FROM KNEXFILE.JS  INSTEAD? ? ? 
+  client: 'mysql',
+  connection: {
+    user: 'root',
+    password: 'tori',
+    database: 'node_site_db'
+  }
+})(require('../loaders/knexfile'))
+
+
 
 module.exports = {
     saltHashPassword,
